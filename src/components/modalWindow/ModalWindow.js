@@ -1,8 +1,7 @@
 import React, { useState } from 'react';
-import './modal.css';
-import './author.css';
-import { stringToHslColor } from '../../utils';
 import { Loader } from './Loader';
+import Comment from './Comment';
+import './modal.css';
 
 const Modal = ({ onClose, photo, comments }) => {
   const [isLoading, setIsLoading] = useState(true);
@@ -29,20 +28,13 @@ const Modal = ({ onClose, photo, comments }) => {
           <div className="actions">
             <h2>Comments:</h2>
             <div className="comments">
-              {!comments.length && <h3>No comments</h3>}
-              {comments.map((comment, i) => (
-                <div className="comment" key={i}>
-                  <div className="results">
-                    <span
-                      className="color-circle"
-                      style={{ background: stringToHslColor(comment.author) }}
-                    >
-                      {comment.author[0]}
-                    </span>
-                  </div>
-                  <div>{comment.text}</div>
-                </div>
-              ))}
+              {comments.length ? (
+                comments.map((comment, i) => (
+                  <Comment key={i} author={comment.author} text={comment.text} />
+                ))
+              ) : (
+                <h3>No comments</h3>
+              )}
             </div>
           </div>
         </div>
