@@ -18,9 +18,9 @@ export const generateComment = () => {
     };
   }
 
-  let comment = [];
+  let comments = [];
   for (let i = 0; i < getRandomInt(0, 10); i++) {
-    comment.push(createComment());
+    comments.push(createComment());
   }
-  return comment;
+  return comments;
 };

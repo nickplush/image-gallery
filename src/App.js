@@ -1,11 +1,11 @@
 import React from 'react';
 import './App.css';
-import LazyContainer from './components/ImageGallery';
+import ImageGallery from './components/ImageGallery/ImageGallery';
 
 function App() {
   return (
     <div className="App">
-      <LazyContainer />
+      <ImageGallery />
     </div>
   );
 }

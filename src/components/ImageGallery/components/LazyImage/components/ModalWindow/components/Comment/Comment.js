@@ -1,6 +1,7 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import { stringToHslColor } from './helpers/index';
-import './author.css';
+import './Comment.css';
 
 const Comment = ({ author, text }) => {
   return (
@@ -13,6 +14,11 @@ const Comment = ({ author, text }) => {
       <div>{text}</div>
     </div>
   );
+};
+
+Comment.propTypes = {
+  author: PropTypes.string,
+  text: PropTypes.string,
 };
 
 export default Comment;

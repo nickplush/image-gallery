@@ -1,10 +1,12 @@
 import React, { useState, useEffect } from 'react';
-import Comment from './components/Comment';
-import Loader from './components/Loader';
-import './index.css';
+import Comment from './components/Comment/Comment';
+import Loader from './components/Loader/Loader';
+import PropTypes from 'prop-types';
+import './Modal.css';
 
 const Modal = ({ onClose, photo, comments }) => {
   const [isLoading, setIsLoading] = useState(true);
+
   const onLoad = () => {
     setIsLoading(false);
   };
@@ -46,4 +48,11 @@ const Modal = ({ onClose, photo, comments }) => {
     </>
   );
 };
+
+Modal.propTypes = {
+  onClose: PropTypes.func,
+  photo: PropTypes.string,
+  comments: PropTypes.array,
+};
+
 export default Modal;

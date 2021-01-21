@@ -1,12 +1,11 @@
 import React, { useEffect, useState } from 'react';
-import ReactDOM from 'react-dom';
 import axios from 'axios';
 import { API_KEY } from '../../config';
-import { LazyImage } from './components/LazyImage';
+import { LazyImage } from './components/LazyImage/LazyImage';
 import { generateComment } from './helpers';
-import './index.css';
+import './ImageGallery.css';
 
-function LazyContainer() {
+const ImageGallery = () => {
   const [photos, setPhotos] = useState([]);
 
   useEffect(() => {
@@ -28,13 +27,16 @@ function LazyContainer() {
     <div>
       <div className="grid">
         {photos.map(photo => (
-          <LazyImage key={photo.id} src={photo.src} alt="placeholder" comment={generateComment()} />
+          <LazyImage
+            key={photo.id}
+            src={photo.src}
+            alt="placeholder"
+            comments={generateComment()}
+          />
         ))}
       </div>
     </div>
   );
-}
+};
 
-const rootElement = document.getElementById('root');
-ReactDOM.render(<LazyContainer />, rootElement);
-export default LazyContainer;
+export default ImageGallery;

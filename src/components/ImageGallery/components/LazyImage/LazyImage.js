@@ -1,11 +1,12 @@
 import React, { useState, useEffect } from 'react';
-import ModalWindow from '../../../ModalWindow';
-import './lazyImage.css';
+import PropTypes from 'prop-types';
+import ModalWindow from './components/ModalWindow/Modal';
+import './LazyImage.css';
 
 const placeHolder =
   'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mP0d/GvBwADLwFjI/tmIwAAAABJRU5ErkJggg==';
 
-export const LazyImage = ({ src, alt, comment }) => {
+export const LazyImage = ({ src, alt, comments }) => {
   const [open, setOpen] = useState(false);
   const [imageSrc, setImageSrc] = useState(placeHolder);
   const [imageRef, setImageRef] = useState();
@@ -73,7 +74,13 @@ export const LazyImage = ({ src, alt, comment }) => {
         onError={onError}
         className={`lazy-image ${isLoaded ? 'loaded' : ''} ${hasError ? 'has-error' : ''}`}
       />
-      {open && <ModalWindow photo={src.large} comments={comment} onClose={onModalClose} />}
+      {open && <ModalWindow photo={src.large} comments={comments} onClose={onModalClose} />}
     </>
   );
+};
+
+LazyImage.propTypes = {
+  src: PropTypes.object,
+  comments: PropTypes.array,
+  alt: PropTypes.string,
 };
