@@ -1,4 +1,4 @@
-.Grid {
+.grid {
   display: grid;
   row-gap: 1rem;
   column-gap: 1rem;
@@ -6,13 +6,13 @@
   justify-items: center;
 }
 @media screen and (max-width: 1100px) {
-  .Grid {
+  .grid {
     grid-template-columns: repeat(2, 1fr);
   }
 }
 
 @media screen and (min-width: 1100px) {
-  .Grid {
+  .grid {
     grid-template-columns: repeat(4, 1fr);
   }
 }

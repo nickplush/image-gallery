@@ -1,37 +1,16 @@
 import React, { useState, useEffect } from 'react';
-import Modal from '../../../ModalWindow';
-import styled from 'styled-components';
+import ModalWindow from '../../../ModalWindow';
+import './lazyImage.css';
 
 const placeHolder =
   'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mP0d/GvBwADLwFjI/tmIwAAAABJRU5ErkJggg==';
 
-const Image = styled.img`
-  display: block;
-  height: auto;
-  width: 100%;
-
-  @keyframes loaded {
-    0% {
-      opacity: 0.1;
-    }
-    100% {
-      opacity: 1;
-    }
-  }
-
-  &.loaded:not(.has-error) {
-    animation: loaded 400ms ease-in-out;
-  }
-
-  &.has-error {
-    content: url(${placeHolder});
-  }
-`;
-
-const LazyImage = ({ src, alt, comment }) => {
+export const LazyImage = ({ src, alt, comment }) => {
   const [open, setOpen] = useState(false);
   const [imageSrc, setImageSrc] = useState(placeHolder);
   const [imageRef, setImageRef] = useState();
+  const [isLoaded, setIsLoaded] = useState(false);
+  const [hasError, setHasError] = useState(false);
 
   const onModalClose = () => {
     setOpen(false);
@@ -42,11 +21,11 @@ const LazyImage = ({ src, alt, comment }) => {
   };
 
   const onLoad = event => {
-    event.target.classList.add('loaded');
+    setIsLoaded(true);
   };
 
   const onError = event => {
-    event.target.classList.add('has-error');
+    setHasError(true);
   };
 
   useEffect(
@@ -85,16 +64,16 @@ const LazyImage = ({ src, alt, comment }) => {
   );
   return (
     <>
-      <Image
+      <img
         src={imageSrc}
         alt={alt}
         onClick={onModalOpen}
         ref={setImageRef}
         onLoad={onLoad}
         onError={onError}
+        className={`lazy-image ${isLoaded ? 'loaded' : ''} ${hasError ? 'has-error' : ''}`}
       />
-      {open && <Modal photo={src.large} comments={comment} onClose={onModalClose} />}
+      {open && <ModalWindow photo={src.large} comments={comment} onClose={onModalClose} />}
     </>
   );
 };
-export default LazyImage;

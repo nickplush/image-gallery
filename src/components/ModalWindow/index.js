@@ -1,7 +1,7 @@
-import React, { useState } from 'react';
-import Loader from './components/Loader';
+import React, { useState, useEffect } from 'react';
+import './index.css';
 import Comment from './components/Comment';
-import './modal.css';
+import Loader from './components/Loader';
 
 const Modal = ({ onClose, photo, comments }) => {
   const [isLoading, setIsLoading] = useState(true);
@@ -9,20 +9,29 @@ const Modal = ({ onClose, photo, comments }) => {
     setIsLoading(false);
   };
 
+  const handleKeyUp = e => {
+    if (e.keyCode === 27) {
+      onClose();
+    }
+  };
+
+  useEffect(() => {
+    document.addEventListener('keyup', handleKeyUp);
+    return () => document.removeEventListener('keyup', handleKeyUp);
+  });
+
   return (
     <>
       <div className="back" />
-      <div className="modal_back" onClick={onClose}>
+      <div className="modal-back" onClick={onClose}>
         <div className="modal" id="modal">
           <div className="content">
-            <div className={isLoading ? '' : 'hidden'}>
-              <Loader />
-            </div>
-            <img src={photo} alt={photo} onLoad={onLoad} className={isLoading ? 'hidden' : 'img'} />
+            {isLoading && <Loader />}
+            <img src={photo} alt={photo} onLoad={onLoad} className={isLoading ? 'hidden' : ''} />
           </div>
-          <div className="actions">
+          <div className="comments">
             <h2>Comments:</h2>
-            <div className="comments">
+            <div className="comments-content">
               {comments.length ? (
                 comments.map((comment, i) => (
                   <Comment key={i} author={comment.author} text={comment.text} />

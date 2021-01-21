@@ -1,7 +1,7 @@
 import './index.css';
 import React, { useEffect, useState } from 'react';
 import ReactDOM from 'react-dom';
-import LazyImage from './components/LazyImage';
+import { LazyImage } from './components/LazyImage';
 import axios from 'axios';
 
 const users = [
@@ -58,7 +58,7 @@ function LazyContainer() {
 
   return (
     <div>
-      <div className="Grid" id={'scrollArea'}>
+      <div className="grid">
         {photos.map(photo => (
           <LazyImage key={photo.id} src={photo.src} alt="placeholder" comment={generateComment()} />
         ))}
