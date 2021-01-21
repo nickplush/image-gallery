@@ -1,7 +1,7 @@
 import './index.css';
 import React, { useEffect, useState } from 'react';
 import ReactDOM from 'react-dom';
-import { LazyImage } from './LazyImage';
+import LazyImage from './components/LazyImage';
 import axios from 'axios';
 
 const users = [

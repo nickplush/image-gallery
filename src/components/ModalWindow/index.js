@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
-import { Loader } from './Loader';
-import Comment from './Comment';
+import Loader from './components/Loader';
+import Comment from './components/Comment';
 import './modal.css';
 
 const Modal = ({ onClose, photo, comments }) => {
@@ -12,18 +12,13 @@ const Modal = ({ onClose, photo, comments }) => {
   return (
     <>
       <div className="back" />
-      <div className="modal_back" onClick={() => onClose()}>
+      <div className="modal_back" onClick={onClose}>
         <div className="modal" id="modal">
           <div className="content">
             <div className={isLoading ? '' : 'hidden'}>
               <Loader />
             </div>
-            <img
-              src={photo.large}
-              alt={photo.large}
-              onLoad={onLoad}
-              className={isLoading ? 'hidden' : 'img'}
-            />
+            <img src={photo} alt={photo} onLoad={onLoad} className={isLoading ? 'hidden' : 'img'} />
           </div>
           <div className="actions">
             <h2>Comments:</h2>

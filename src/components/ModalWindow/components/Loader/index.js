@@ -1,6 +1,6 @@
 import './loader.css';
 
-export const Loader = () => (
+const Loader = () => (
   <div className="container">
     <div className="lds-roller">
       <div />
@@ -9,3 +9,5 @@ export const Loader = () => (
     </div>
   </div>
 );
+
+export default Loader;

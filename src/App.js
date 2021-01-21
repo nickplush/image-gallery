@@ -1,6 +1,6 @@
 import React from 'react';
 import './App.css';
-import LazyContainer from './components/LazyImage';
+import LazyContainer from './components/ImageGallery';
 
 function App() {
   return (

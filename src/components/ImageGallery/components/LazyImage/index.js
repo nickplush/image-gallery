@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
+import Modal from '../../../ModalWindow';
 import styled from 'styled-components';
-import ModalWindow from '../modalWindow/ModalWindow';
 
 const placeHolder =
   'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mP0d/GvBwADLwFjI/tmIwAAAABJRU5ErkJggg==';
@@ -28,7 +28,7 @@ const Image = styled.img`
   }
 `;
 
-export const LazyImage = ({ src, alt, comment }) => {
+const LazyImage = ({ src, alt, comment }) => {
   const [open, setOpen] = useState(false);
   const [imageSrc, setImageSrc] = useState(placeHolder);
   const [imageRef, setImageRef] = useState();
@@ -93,7 +93,8 @@ export const LazyImage = ({ src, alt, comment }) => {
         onLoad={onLoad}
         onError={onError}
       />
-      {open && <ModalWindow photo={src} comments={comment} onClose={onModalClose} />}
+      {open && <Modal photo={src.large} comments={comment} onClose={onModalClose} />}
     </>
   );
 };
+export default LazyImage;
