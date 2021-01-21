@@ -1,5 +1,5 @@
 import React from 'react';
-import { stringToHslColor } from '../../../../utils';
+import { stringToHslColor } from './helpers/index';
 import './author.css';
 
 const Comment = ({ author, text }) => {

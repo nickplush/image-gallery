@@ -1,21 +1,13 @@
 import React, { useEffect, useState } from 'react';
 import ReactDOM from 'react-dom';
 import { LazyImage } from './components/LazyImage';
+import { generateComment } from './helpers';
 import axios from 'axios';
 import './index.css';
 
-const users = [
-  'Gaudio F Bob',
-  'Hoy Bob',
-  'Loliya Bob',
-  'Bob Bob',
-  'Tameka C Bob',
-  'James M Andre',
-  'Nolan Andre',
-];
-
 function LazyContainer() {
   const [photos, setPhotos] = useState([]);
+
   useEffect(() => {
     const getPhotos = async () => {
       const res = await axios.get('https://api.pexels.com/v1/search?query=nature&per_page=100', {
@@ -30,31 +22,6 @@ function LazyContainer() {
       setPhotos([]);
     };
   }, []);
-
-  const generateComment = () => {
-    let str =
-      'Lorem ipsum dolor sit amet consectetur adipisicing elit. Sequi, soluta ea. Atque voluptatem dignissimos deleniti natus quae nisi neque earum, quis laboriosam repellendus ipsa est, hic accusantium corporis dolore quam.';
-    let words = str.split(' ');
-
-    function getRandomInt(min, max) {
-      min = Math.ceil(min);
-      max = Math.floor(max);
-      return Math.floor(Math.random() * (max - min)) + min;
-    }
-
-    function createComment() {
-      return {
-        author: users[Math.floor(Math.random() * users.length)],
-        text: words[getRandomInt(0, words.length)] + ' ' + words[getRandomInt(0, words.length)],
-      };
-    }
-
-    let comment = [];
-    for (let i = 0; i < getRandomInt(0, 10); i++) {
-      comment.push(createComment());
-    }
-    return comment;
-  };
 
   return (
     <div>
