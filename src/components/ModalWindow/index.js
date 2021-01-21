@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
-import './index.css';
 import Comment from './components/Comment';
 import Loader from './components/Loader';
+import './index.css';
 
 const Modal = ({ onClose, photo, comments }) => {
   const [isLoading, setIsLoading] = useState(true);

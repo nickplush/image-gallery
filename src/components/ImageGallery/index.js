@@ -1,8 +1,8 @@
-import './index.css';
 import React, { useEffect, useState } from 'react';
 import ReactDOM from 'react-dom';
 import { LazyImage } from './components/LazyImage';
 import axios from 'axios';
+import './index.css';
 
 const users = [
   'Gaudio F Bob',
