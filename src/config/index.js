@@ -7,3 +7,4 @@ export const USERS = [
   'James M Andre',
   'Nolan Andre',
 ];
+export const API_KEY = '563492ad6f9170000100000103bafd0a3dfe48508bc5c66b15bacbde';
