@@ -34,13 +34,13 @@ export const LazyImage = ({ src, alt, comments }) => {
       let observer;
       let didCancel = false;
 
-      if (imageRef && imageSrc !== src.tiny) {
+      if (imageRef && imageSrc !== src.webformatURL) {
         if (IntersectionObserver) {
           observer = new IntersectionObserver(
             entries => {
               entries.forEach(entry => {
                 if (!didCancel && (entry.intersectionRatio > 0 || entry.isIntersecting)) {
-                  setImageSrc(src.tiny);
+                  setImageSrc(src.webformatURL);
                   observer.unobserve(imageRef);
                 }
               });
@@ -51,7 +51,7 @@ export const LazyImage = ({ src, alt, comments }) => {
           );
           observer.observe(imageRef);
         } else {
-          setImageSrc(src.tiny);
+          setImageSrc(src.webformatURL);
         }
       }
       return () => {
@@ -74,7 +74,7 @@ export const LazyImage = ({ src, alt, comments }) => {
         onError={onError}
         className={`lazy-image ${isLoaded ? 'loaded' : ''} ${hasError ? 'has-error' : ''}`}
       />
-      {open && <ModalWindow photo={src.large} comments={comments} onClose={onModalClose} />}
+      {open && <ModalWindow photo={src.largeImageURL} comments={comments} onClose={onModalClose} />}
     </>
   );
 };
