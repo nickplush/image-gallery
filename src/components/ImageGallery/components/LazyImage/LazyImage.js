@@ -1,18 +1,26 @@
 import React, { useState, useEffect } from 'react';
-import PropTypes from 'prop-types';
-import ModalWindow from './components/ModalWindow/Modal';
+import Modal from './components/ModalWindow/Modal';
 import './LazyImage.css';
+import { BehaviorSubject, fromEvent } from 'rxjs';
 
 const placeHolder =
   'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mP0d/GvBwADLwFjI/tmIwAAAABJRU5ErkJggg==';
 
-export const LazyImage = ({ src, alt, comments }) => {
+export const LazyImage = ({ src, alt, comments, position }) => {
+  const parentRef = React.createRef();
+  const [srcImage, setSrcImage] = useState(placeHolder);
   const [open, setOpen] = useState(false);
-  const [imageSrc, setImageSrc] = useState(placeHolder);
-  const [imageRef, setImageRef] = useState();
-  const [isLoaded, setIsLoaded] = useState(false);
-  const [hasError, setHasError] = useState(false);
 
+  useEffect(
+    () => {
+      if (srcImage === placeHolder) {
+        if (parentRef.current.getBoundingClientRect().top + position < position + 1500) {
+          setSrcImage(src.webformatURL);
+        }
+      }
+    },
+    [position],
+  );
   const onModalClose = () => {
     setOpen(false);
   };
@@ -21,66 +29,10 @@ export const LazyImage = ({ src, alt, comments }) => {
     setOpen(true);
   };
 
-  const onLoad = event => {
-    setIsLoaded(true);
-  };
-
-  const onError = event => {
-    setHasError(true);
-  };
-
-  useEffect(
-    () => {
-      let observer;
-      let didCancel = false;
-
-      if (imageRef && imageSrc !== src.webformatURL) {
-        if (IntersectionObserver) {
-          observer = new IntersectionObserver(
-            entries => {
-              entries.forEach(entry => {
-                if (!didCancel && (entry.intersectionRatio > 0 || entry.isIntersecting)) {
-                  setImageSrc(src.webformatURL);
-                  observer.unobserve(imageRef);
-                }
-              });
-            },
-            {
-              threshold: 0.01,
-            },
-          );
-          observer.observe(imageRef);
-        } else {
-          setImageSrc(src.webformatURL);
-        }
-      }
-      return () => {
-        didCancel = true;
-        if (observer && observer.unobserve) {
-          observer.unobserve(imageRef);
-        }
-      };
-    },
-    [src, imageSrc, imageRef],
-  );
   return (
     <>
-      <img
-        src={imageSrc}
-        alt={alt}
-        onClick={onModalOpen}
-        ref={setImageRef}
-        onLoad={onLoad}
-        onError={onError}
-        className={`lazy-image ${isLoaded ? 'loaded' : ''} ${hasError ? 'has-error' : ''}`}
-      />
-      {open && <ModalWindow photo={src.largeImageURL} comments={comments} onClose={onModalClose} />}
+      <img src={srcImage} className="lazy-image " onClick={onModalOpen} alt={alt} ref={parentRef} />
+      {open && <Modal photo={src.largeImageURL} comments={comments} onClose={onModalClose} />}
     </>
   );
-};
-
-LazyImage.propTypes = {
-  src: PropTypes.object,
-  comments: PropTypes.array,
-  alt: PropTypes.string,
 };
