@@ -34,7 +34,7 @@ const Modal = ({ onClose, photo, comments }) => {
           <div className="comments">
             <h2>Comments:</h2>
             <div className="comments-content">
-              {comments.length ? (
+              {comments && comments.length ? (
                 comments.map((comment, i) => (
                   <Comment key={i} author={comment.author} text={comment.text} />
                 ))
